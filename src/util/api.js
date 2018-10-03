@@ -19,9 +19,7 @@ export function saveDeckTitle(title){
   return AsyncStorage.getItem('Decks')
     .then((result)=>{
       const decks = JSON.parse(result);
-      console.log(decks, title);
       if(decks === null){
-        console.log("OH NO")
         return AsyncStorage.setItem('Decks',JSON.stringify({
           [title]: {
             title,
@@ -77,4 +75,20 @@ export function addCardToDeck(title,card){
 export function getInitialData(){
   return getDecks()
     .then((result) => (JSON.parse(result)))
+}
+
+export function removeDeckTitle(title){
+  return AsyncStorage.getItem('Decks')
+    .then((result)=>{
+      const decks = JSON.parse(result);
+      if(decks !== null && title in decks){
+        const { [title]:_, ...newDecks } = decks;
+        return AsyncStorage.setItem('Decks', JSON.stringify(newDecks));
+      }
+      else{
+        return Promise.reject(result);
+      }
+    },(e)=>{
+      console.log(e);
+    })
 }

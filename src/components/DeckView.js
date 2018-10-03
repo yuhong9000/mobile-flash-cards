@@ -4,6 +4,12 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import SubmitBtn from './UI/SubmitBtn'
+import {
+  clearLocalNotification,
+  setLocalNotification
+} from '../util/helper'
+import { updateRemoveDeck } from '../actions/decks'
+import { removeDeckTitle } from '../util/api'
 
 class DeckView extends React.Component{
   static navigationOptions = ({navigation}) => {
@@ -34,6 +40,8 @@ class DeckView extends React.Component{
   ToReviewCardsView = () => {
     const { count } = this.props;
     if(count > 0){
+      clearLocalNotification()
+        .then(setLocalNotification);
       this.handleNavigate('ReviewCardsView');
     }
     else{
@@ -46,6 +54,8 @@ class DeckView extends React.Component{
   ToDefaultQuizView = () => {
     const { count } = this.props;
     if(count > 0){
+      clearLocalNotification()
+        .then(setLocalNotification);
       this.handleNavigate('DefaultQuizView');
     }
     else{
@@ -55,16 +65,21 @@ class DeckView extends React.Component{
     }
   }
 
-  OnRemoveDeck = () => {
-    const { navigation } = this.props;
+  handleRemoveDeck = () => {
+    const { navigation, title, dispatch } = this.props;
     const { navigate } = navigation;
 
+    dispatch(updateRemoveDeck(title));
+    navigate('Home');
+  }
+
+  OnRemoveDeck = () => {
 
     Alert.alert(
       'Remove Deck',
       'Are you sure to remove this deck?',
       [
-        { text: 'Yes', onPress: ()=> {navigate('Home')}},
+        { text: 'Yes', onPress: this.handleRemoveDeck },
         { text: 'Cancel' }
       ],
       { cancelable: false }
