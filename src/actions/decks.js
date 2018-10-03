@@ -31,6 +31,7 @@ export function updateNewDeck(title){
         dispatch(addDeck(deck));
       },(result) => {
         // rejection is caused by duplicated deck titles
+        // TODO: keep alert at component level
         Alert.alert(
           'Error',
           'Unable to create a duplicate deck',

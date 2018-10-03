@@ -55,6 +55,7 @@ class DefaultQuizView extends React.Component{
     this.setState((state)=>{
       return {
         index: 0,
+        correct: 0,
       }
     });
   }

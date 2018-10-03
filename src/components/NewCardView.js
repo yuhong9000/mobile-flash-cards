@@ -44,8 +44,10 @@ class NewCardView extends React.Component{
     const { navigation, dispatch } = this.props;
     const { title } = navigation.state.params;
     const { navigate } = navigation;
-    const { question, answer } = this.state;
-
+    let { question, answer } = this.state;
+    question = question.trim();
+    answer = answer.trim();
+    
     // validate input
     if(question === '' || answer === ''){
       Alert.alert(
