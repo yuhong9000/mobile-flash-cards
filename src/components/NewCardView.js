@@ -97,7 +97,7 @@ class NewCardView extends React.Component{
             <CustomTextArea
               placeholder='Back'
               value={answer}
-              style={[styles.text]}
+              style={[styles.text,{height:'100%'}]}
               onChangeText={this.handleAnswerChange}
               autoCapitalize='sentences'
               multiline={true}

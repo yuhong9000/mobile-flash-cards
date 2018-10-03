@@ -83,7 +83,7 @@ export function removeDeckTitle(title){
       const decks = JSON.parse(result);
       if(decks !== null && title in decks){
         const { [title]:_, ...newDecks } = decks;
-        return AsyncStorage.setItem('Decks', JSON.stringify(newDecks));
+        return AsyncStorage.setItem('Decks', JSON.stringify({...newDecks}));
       }
       else{
         return Promise.reject(result);

@@ -33,30 +33,12 @@ class DeckView extends React.Component{
     )
   }
 
-  ToNewCardView = () => {
-    this.handleNavigate('NewCardView');
-  }
-
-  ToReviewCardsView = () => {
+  ToStudyView(title){
     const { count } = this.props;
     if(count > 0){
       clearLocalNotification()
         .then(setLocalNotification);
-      this.handleNavigate('ReviewCardsView');
-    }
-    else{
-      Alert.alert(
-        'No cards in this deck'
-      )
-    }
-  }
-
-  ToDefaultQuizView = () => {
-    const { count } = this.props;
-    if(count > 0){
-      clearLocalNotification()
-        .then(setLocalNotification);
-      this.handleNavigate('DefaultQuizView');
+      this.handleNavigate(title);
     }
     else{
       Alert.alert(
@@ -74,7 +56,6 @@ class DeckView extends React.Component{
   }
 
   OnRemoveDeck = () => {
-
     Alert.alert(
       'Remove Deck',
       'Are you sure to remove this deck?',
@@ -95,9 +76,9 @@ class DeckView extends React.Component{
           <Text style={[styles.title]}>{count} cards</Text>
         </View>
         <View style={styles.bottom}>
-          <SubmitBtn text='Add Cards' onPress={this.ToNewCardView}/>
-          <SubmitBtn text='Review Cards' onPress={this.ToReviewCardsView}/>
-          <SubmitBtn text='Start Quiz' onPress={this.ToDefaultQuizView}/>
+          <SubmitBtn text='Add Cards' onPress={()=>{this.handleNavigate('NewCardView')}}/>
+          <SubmitBtn text='Review Cards' onPress={()=>{this.ToStudyView('ReviewCardsView')}}/>
+          <SubmitBtn text='Start Quiz' onPress={()=>{this.ToStudyView('DefaultQuizView')}}/>
           <SubmitBtn text='Remove Deck' onPress={this.OnRemoveDeck}/>
         </View>
       </View>
@@ -121,7 +102,7 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
   },
   title: {
     fontSize: 30,
